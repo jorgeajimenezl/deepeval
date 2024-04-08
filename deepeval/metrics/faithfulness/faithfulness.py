@@ -173,7 +173,9 @@ class FaithfulnessMetric(BaseMetric):
         data = trimAndLoadJson(res, self)
         return data["truths"]
 
-    def _generate_truths(self, retrieval_context: str) -> List[str]:
+    def _generate_truths(self, retrieval_context: List[str]) -> List[str]:
+        if len(retrieval_context) == 0:
+            return []
         prompt = FaithfulnessTemplate.generate_truths(
             text="\n\n".join(retrieval_context)
         )
